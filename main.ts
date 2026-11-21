@@ -19,6 +19,12 @@ import { buildDossier } from './vendor/makefun-game.ts';
 
 const here = fileURLToPath(new URL('.', import.meta.url));
 const out = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
+const gameplayProof = ['01-glasshouse.jpg', '02-orbit-orchard.jpg', '03-bell-archive.jpg'];
+for (const filename of gameplayProof) {
+  if (!existsSync(join(here, 'screenshots', filename))) {
+    throw new Error(`Missing required gameplay screenshot: ${filename}`);
+  }
+}
 
 mkdirSync(out, { recursive: true });
 cpSync(join(here, 'game'), join(out, 'game'), { recursive: true });
