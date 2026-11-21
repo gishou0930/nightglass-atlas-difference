@@ -4,8 +4,8 @@ export function createGameState() {
   return {
     chapter: 0,
     found: new Set(),
-    completed: [false, false, false],
-    scores: [0, 0, 0],
+    completed: Array(PLATES.length).fill(false),
+    scores: Array(PLATES.length).fill(0),
     timeLeft: SECONDS_PER_PLATE,
     misses: 0,
     allMisses: 0,

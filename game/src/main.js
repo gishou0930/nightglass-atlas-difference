@@ -141,7 +141,8 @@ function finishPlate() {
   transitionTimeout = window.setTimeout(() => {
     if (state.chapter === PLATES.length - 1) {
       state.phase = 'finished';
-      byId('finishSummary').textContent = `Three plates, twenty-one details, ${state.allMisses} quiet ${state.allMisses === 1 ? 'misstep' : 'missteps'}.`;
+      const detailCount = PLATES.reduce((total, plate) => total + plate.differences.length, 0);
+      byId('finishSummary').textContent = `${PLATES.length} plates, ${detailCount} details, ${state.allMisses} quiet ${state.allMisses === 1 ? 'misstep' : 'missteps'}.`;
       byId('finalScore').textContent = String(totalScore(state)).padStart(4, '0');
       updateDisplay();
       byId('finishDialog').showModal();
@@ -202,8 +203,8 @@ function resetCurrentPlate() {
   window.clearTimeout(transitionTimeout);
   if (byId('finishDialog').open) byId('finishDialog').close();
   if (state.phase === 'finished') {
-    state.completed = [false, false, false];
-    state.scores = [0, 0, 0];
+    state.completed = Array(PLATES.length).fill(false);
+    state.scores = Array(PLATES.length).fill(0);
     selectPlate(state, 0);
   } else {
     selectPlate(state, state.chapter);

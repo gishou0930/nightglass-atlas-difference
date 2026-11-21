@@ -4,7 +4,7 @@
 [![rank](https://make.fun/badge/best-spot-the-difference-game-20261121-0451/gishou0930/nightglass-atlas-difference/rank.svg)](https://make.fun/bounty/best-spot-the-difference-game-20261121-0451/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=best-spot-the-difference-game-20261121-0451)
 [![reward](https://make.fun/badge/best-spot-the-difference-game-20261121-0451/gishou0930/nightglass-atlas-difference/reward.svg)](https://make.fun/bounty/best-spot-the-difference-game-20261121-0451?utm_source=github&utm_medium=readme&utm_campaign=best-spot-the-difference-game-20261121-0451)
 
-An original hand-illustrated spot-the-difference game across three quiet corners of a moonlit observatory.
+An original illustrated spot-the-difference game across four quiet corners of a moonlit observatory, with 28 fair differences to find.
 
 ## Run it
 

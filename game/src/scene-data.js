@@ -47,6 +47,22 @@ export const PLATES = [
       { x: 431, y: 368, radius: 24, name: 'the bookmark ribbon' },
     ],
   },
+  {
+    id: 'moonroof',
+    name: 'The observatory roof before dawn',
+    shortName: 'Moonroof',
+    kicker: 'MOONLIT ROOF',
+    story: 'The brass dome is turning. One small piece of the sky has wandered.',
+    differences: [
+      { x: 574, y: 88, radius: 25, name: 'the moon’s silver orbit' },
+      { x: 351, y: 201, radius: 24, name: 'the astrolabe’s star needle' },
+      { x: 179, y: 252, radius: 24, name: 'the telescope lens' },
+      { x: 593, y: 174, radius: 24, name: 'the weather vane’s pennant' },
+      { x: 543, y: 305, radius: 24, name: 'the cat’s curled tail' },
+      { x: 592, y: 288, radius: 24, name: 'the rooftop lantern flame' },
+      { x: 267, y: 164, radius: 24, name: 'a silver spot on the moth’s wing' },
+    ],
+  },
 ];
 
 export const SECONDS_PER_PLATE = 180;
