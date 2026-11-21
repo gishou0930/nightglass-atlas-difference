@@ -19,7 +19,7 @@ import { buildDossier } from './vendor/makefun-game.ts';
 
 const here = fileURLToPath(new URL('.', import.meta.url));
 const out = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
-const gameplayProof = ['01-glasshouse.jpg', '02-bell-archive.jpg', '03-tideglass-quay.jpg', '04-cloud-atlas.jpg'];
+const gameplayProof = ['01-glasshouse.jpg', '02-bell-archive.jpg', '03-tideglass-quay.jpg', '04-paper-workshop.jpg'];
 for (const filename of gameplayProof) {
   if (!existsSync(join(here, 'screenshots', filename))) {
     throw new Error(`Missing required gameplay screenshot: ${filename}`);

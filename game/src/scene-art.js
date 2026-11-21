@@ -288,9 +288,53 @@ function drawMaproom(alternate, prefix) {
   `;
 }
 
+function drawWorkshop(alternate, prefix) {
+  return `
+    ${skyAndFrame(prefix, ['#282744', '#695c70', '#d58b68'])}
+    ${star(78,82,2.5)}${star(145,124,alternate ? 3 : 2)}${star(331,68,2)}${star(454,103,2.3,.75)}
+    <path d="M0 285Q114 254 231 283T473 270T720 283V450H0Z" fill="#293e48" opacity=".86"/>
+    <circle cx="605" cy="83" r="27" fill="#f2d89a" opacity=".95"/>
+    ${alternate ? '<ellipse cx="605" cy="83" rx="42" ry="10" fill="none" stroke="#f1d69a" stroke-width="3" transform="rotate(-23 605 83)"/>' : ''}
+    <path d="M49 260V149q0-74 103-95 105 21 105 95v111" fill="#344b55" stroke="#d3ba82" stroke-width="8"/>
+    <path d="M70 259V151q0-57 82-78 82 21 82 78v108" fill="#526977" stroke="#a78f68" stroke-width="4"/>
+    <path d="M152 75v184M72 171h160" stroke="#d0b985" stroke-width="4"/>
+    <path d="M93 258v-54q0-40 59-54 58 14 58 54v54" fill="#293f4d" stroke="#c6ac78" stroke-width="3"/>
+    <path d="M123 213q28-16 58 0" fill="none" stroke="#e4c990" stroke-width="3"/>
+    <path d="M275 28v72m-21 0h42m-35 0 14 13 14-13" fill="none" stroke="#d8bd85" stroke-width="3"/>
+    <circle cx="275" cy="112" r="${alternate ? 5 : 3}" fill="#f3d99c" stroke="#8d7152" stroke-width="2"/>
+    <path d="M445 104h110v135H445Z" fill="#40545c" stroke="#d5bb84" stroke-width="6"/>
+    <circle cx="524" cy="168" r="36" fill="#d7bf8d" stroke="#5f5146" stroke-width="5"/>
+    <circle cx="524" cy="168" r="28" fill="#354b54" stroke="#f0dba4" stroke-width="2"/>
+    <path d="M524 168 510 151M524 168l${alternate ? '17-7' : '8 18'}" stroke="#f3d99a" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="524" cy="168" r="4" fill="#d9a85f"/>
+    <path d="M48 316h624l-24 24H70Z" fill="#9b704f" stroke="#543f3a" stroke-width="4"/>
+    <path d="M74 340v74m548-74v74M198 340v74m320-74v74" stroke="#684c40" stroke-width="8"/>
+    <path d="M87 352h72v42H87Z" fill="#5c5549" stroke="#c8a976" stroke-width="3"/>
+    <path d="M96 363v-14m14 14v-19m14 19v-12m14 12v-17" stroke="#aac08a" stroke-width="3" stroke-linecap="round"/>
+    <path d="M91 354q-9-16 0-25 9 9 0 25Z" fill="#d97f69"/><path d="M91 352q-15-12-17-3 8 12 17 3m0-1q15-14 19-4-8 12-19 4" fill="#d97f69"/>
+    ${alternate ? '<path d="M91 344q-9-16 0-25 9 9 0 25Z" fill="#f0c777"/>' : ''}
+    <path d="M143 282 184 224" stroke="#c49b62" stroke-width="13" stroke-linecap="round"/><path d="M143 282 184 224" stroke="#f0d8a0" stroke-width="3"/>
+    <circle cx="169" cy="281" r="13" fill="${alternate ? '#84bcc0' : '#526a72'}" stroke="#eed99f" stroke-width="4"/><circle cx="169" cy="281" r="4" fill="#fff0c0" opacity=".86"/>
+    <path d="M136 293h67m-49 0 12 23m28-77 20-22" stroke="#d3b780" stroke-width="4" stroke-linecap="round"/>
+    <path d="M255 261v-25m-8 0q0-13 13-13t13 13q0 8-13 8v17m-8 0h16" fill="none" stroke="#e2c587" stroke-width="4" stroke-linecap="round"/>
+    ${alternate ? '<circle cx="260" cy="234" r="5" fill="none" stroke="#fff0bd" stroke-width="2"/>' : ''}
+    <path d="M318 241q34-49 70-11 31-32 65 2-40 5-66 34-29-19-69-25Z" fill="#ead5a6" stroke="#715b4b" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M355 239q31-4 54 18m-35-18q-8 14-6 26" fill="none" stroke="#9b7959" stroke-width="3"/>
+    ${alternate ? '<path d="M377 204q9-12 18 0" fill="none" stroke="#bf805e" stroke-width="3"/>' : ''}
+    <path d="M421 351q24-18 48 0l-24 24Z" fill="#d8c38d" stroke="#715846" stroke-width="3"/>
+    ${alternate ? '<path d="M445 342v18m-9-9h18m-15-6 12 12m0-12-12 12" stroke="#7c674f" stroke-width="2"/>' : '<circle cx="445" cy="351" r="3" fill="#8d7052"/>'}
+    <path d="M625 314v-36q0-16 13-16t13 16v36Z" fill="#b68150" stroke="#59473d" stroke-width="3"/>
+    <path d="M638 263q-13-13 0-26 13 13 0 26Z" fill="${alternate ? '#fff0bd' : '#e2aa60'}" stroke="#f5d99d" stroke-width="2"/>
+    <path d="M615 316h46" stroke="#d8be86" stroke-width="4"/>
+    <path d="M531 362h58v36h-58Z" fill="#517080" stroke="#d3b881" stroke-width="3"/>
+    <path d="M538 370h43" stroke="#d9bf88" stroke-width="3"/><path d="M560 362v-14l12 8-12 8Z" fill="${alternate ? '#e8c477' : '#c97962'}"/>
+    <path d="M382 402q74-18 148 0m66 0q22-9 44 0" fill="none" stroke="#cfb27c" stroke-width="2" opacity=".6"/>
+  `;
+}
+
 export function renderArtwork(plate, alternate = false, side = 'left') {
   const prefix = `${plate.id}-${side}`;
-  const renderers = { glasshouse: drawGlasshouse, orchard: drawOrchard, archive: drawArchive, moonroof: drawMoonroof, harbor: drawHarbor, maproom: drawMaproom };
+  const renderers = { glasshouse: drawGlasshouse, orchard: drawOrchard, archive: drawArchive, moonroof: drawMoonroof, harbor: drawHarbor, maproom: drawMaproom, workshop: drawWorkshop };
   return renderers[plate.id](alternate, prefix);
 }
 

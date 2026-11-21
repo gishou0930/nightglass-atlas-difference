@@ -103,6 +103,26 @@ export const PLATES = [
       { x: 218, y: 332, radius: 20, name: 'the brass map ruler' },
     ],
   },
+  {
+    id: 'workshop',
+    name: 'The paper astronomer’s workshop',
+    shortName: 'Paper workshop',
+    kicker: 'PAPER WORKSHOP',
+    story: 'Aster folds a bird to carry one last star. The workshop’s tools remember a different shape.',
+    differences: [
+      { x: 605, y: 83, radius: 24, name: 'the moon’s orbit' },
+      { x: 145, y: 124, radius: 22, name: 'the north star in the window' },
+      { x: 275, y: 112, radius: 22, name: 'a bead on the hanging mobile' },
+      { x: 524, y: 168, radius: 24, name: 'the clock’s minute hand' },
+      { x: 169, y: 281, radius: 23, name: 'the telescope’s blue lens' },
+      { x: 377, y: 204, radius: 23, name: 'a crease on the paper bird’s wing' },
+      { x: 91, y: 330, radius: 22, name: 'a petal in the tiny pot' },
+      { x: 260, y: 234, radius: 22, name: 'the bow of the brass key' },
+      { x: 444, y: 350, radius: 23, name: 'the compass rose on Aster’s map' },
+      { x: 638, y: 250, radius: 22, name: 'the candle flame' },
+      { x: 566, y: 372, radius: 22, name: 'the bookmark on the blue book' },
+    ],
+  },
 ];
 
 export const SECONDS_PER_PLATE = 180;

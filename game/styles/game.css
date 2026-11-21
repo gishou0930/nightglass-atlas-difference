@@ -53,8 +53,8 @@ button:focus-visible, a:focus-visible {
 .field-note { display: inline-flex; min-height: 40px; align-items: center; gap: 9px; padding: 0 14px; color: #e2dfd1; background: rgba(255,255,255,.04); border: 1px solid rgba(229,221,199,.22); border-radius: 999px; cursor: pointer; font-size: .74rem; }
 .field-note-icon { display: grid; width: 18px; height: 18px; place-items: center; border: 1px solid #b89c6b; border-radius: 50%; color: #e8cf9f; font: 700 .7rem var(--serif); }
 
-.chapter-nav { gap: 9px; margin: 0 0 9px; }
-.chapter-button { min-width: 0; min-height: 36px; gap: 9px; padding: 0 12px; color: #aab5aa; background: transparent; border: 1px solid rgba(223, 224, 205, .14); border-radius: 7px; cursor: pointer; transition: border-color .18s ease, color .18s ease, background-color .18s ease; }
+.chapter-nav { gap: 6px; margin: 0 0 9px; }
+.chapter-button { min-width: 0; min-height: 36px; gap: 6px; padding: 0 8px; color: #aab5aa; background: transparent; border: 1px solid rgba(223, 224, 205, .14); border-radius: 7px; cursor: pointer; transition: border-color .18s ease, color .18s ease, background-color .18s ease; }
 .chapter-button:hover { color: #eee7d5; border-color: rgba(221, 186, 124, .55); }
 .chapter-button:disabled { opacity: .5; cursor: not-allowed; }
 .chapter-button.is-current { color: #f5eedc; background: rgba(198, 160, 108, .12); border-color: rgba(221, 186, 124, .58); }
@@ -62,7 +62,7 @@ button:focus-visible, a:focus-visible {
 .chapter-index { color: #d6b77e; font: 700 .67rem var(--serif); }
 .chapter-name { overflow: hidden; font-size: .68rem; letter-spacing: .02em; text-overflow: ellipsis; white-space: nowrap; }
 .chapter-mark { margin-left: auto; color: #68776e; font-size: .77rem; }
-.chapter-thread { width: clamp(10px, 3vw, 36px); height: 1px; flex: 0 0 auto; background: rgba(224, 218, 198, .23); }
+.chapter-thread { width: clamp(8px, 1vw, 14px); height: 1px; flex: 0 0 auto; background: rgba(224, 218, 198, .23); }
 
 .game-card { padding: 16px 19px 12px; color: var(--ink); background: var(--paper); border: 1px solid rgba(222, 211, 185, .8); border-radius: 13px; box-shadow: 0 18px 55px rgba(0,0,0,.25), inset 0 0 0 5px rgba(255,255,255,.26); }
 .plate-header { justify-content: space-between; gap: 22px; padding: 0 2px 9px; }
@@ -156,10 +156,10 @@ kbd { min-width: 17px; padding: 2px 4px; color: #777566; background: #e7deca; bo
   .intro { align-items: flex-end; }
   .intro-copy { max-width: 390px; }
   .edition { font-size: .52rem; }
-  .chapter-nav { gap: 5px; }
+  .chapter-nav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px; }
   .chapter-button { flex: 1; gap: 6px; padding-inline: 8px; }
   .chapter-name { font-size: .62rem; }
-  .chapter-thread { width: 9px; }
+  .chapter-thread { display: none; }
   .game-card { padding: 16px 14px 12px; }
   .plate-header { align-items: flex-start; gap: 10px; }
   .score-ribbon { gap: 9px; padding: 6px 8px; }
