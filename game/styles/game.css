@@ -94,8 +94,10 @@ button:focus-visible, a:focus-visible {
 .caption-side { margin-left: auto; color: #98917e; font-size: .5rem; }
 .picture-hitbox { position: relative; display: block; width: 100%; padding: 0; overflow: hidden; background: #16242d; border: 0; cursor: crosshair; line-height: 0; }
 .picture-hitbox:focus-visible { outline: 3px solid #b86238; outline-offset: -3px; z-index: 1; }
-.art-svg, .marker-layer, .cursor-layer { display: block; width: 100%; aspect-ratio: 8 / 5; }
-.marker-layer, .cursor-layer { position: absolute; inset: 0; height: 100%; pointer-events: none; }
+.art-svg, .marker-layer, .magnifier-layer, .cursor-layer { display: block; width: 100%; aspect-ratio: 8 / 5; }
+.marker-layer, .magnifier-layer, .cursor-layer { position: absolute; inset: 0; height: 100%; pointer-events: none; }
+.magnifier-layer[hidden] { display: none; }
+.magnifier-border { fill: rgba(18, 29, 34, .1); stroke: #fff2c9; stroke-width: 5; filter: drop-shadow(0 2px 4px rgba(0,0,0,.4)); }
 .marker-ring { fill: rgba(246, 213, 150, .12); stroke: #fff2c9; stroke-width: 4; transform-box: fill-box; transform-origin: center; }
 .cursor-layer[hidden] { display: none; }
 .marker-core { fill: #b37b3a; stroke: #fff5dc; stroke-width: 2; }

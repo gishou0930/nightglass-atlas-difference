@@ -7,13 +7,15 @@ const byId = (id) => document.getElementById(id);
 const state = createGameState();
 const cursor = { x: 360, y: 225 };
 const pictures = {
-  left: { button: byId('leftPicture'), art: byId('leftArt'), markers: byId('leftMarkers'), cursor: byId('leftCursor') },
-  right: { button: byId('rightPicture'), art: byId('rightArt'), markers: byId('rightMarkers'), cursor: byId('rightCursor') },
+  left: { button: byId('leftPicture'), art: byId('leftArt'), markers: byId('leftMarkers'), magnifier: byId('leftMagnifier'), cursor: byId('leftCursor') },
+  right: { button: byId('rightPicture'), art: byId('rightArt'), markers: byId('rightMarkers'), magnifier: byId('rightMagnifier'), cursor: byId('rightCursor') },
 };
 let focusedSide = null;
+let lastFocusedSide = null;
 let hintTimeout;
 let transitionTimeout;
 let soundOn = false;
+let magnifierOn = false;
 
 function activePlate() {
   return PLATES[state.chapter];
@@ -40,13 +42,15 @@ function setFeedback(message, kind = '') {
 function renderScene() {
   const plate = activePlate();
   focusedSide = null;
+  lastFocusedSide = null;
   byId('plateKicker').innerHTML = `FIELD NOTE ${String(state.chapter + 1).padStart(2, '0')} <span aria-hidden="true">/</span> ${plate.kicker}`;
   byId('plateTitle').textContent = plate.name;
   byId('plateStory').textContent = plate.story;
   for (const [side, view] of Object.entries(pictures)) {
     view.art.innerHTML = renderArtwork(plate, side === 'right', side);
+    renderMagnifier(view, side, plate);
     view.art.setAttribute('aria-label', `${plate.name}, ${side} observation`);
-    view.button.setAttribute('aria-label', `${side === 'left' ? 'Left' : 'Right'} picture: ${plate.name}. Seven details differ between the pictures. Focus here, use arrow keys to move, then press Enter or Space to check a spot.`);
+    view.button.setAttribute('aria-label', `${side === 'left' ? 'Left' : 'Right'} picture: ${plate.name}. ${plate.differences.length} details differ between the pictures. Focus here, use arrow keys to move, then press Enter or Space to check a spot.`);
   }
   setFeedback('Take your time. The little things are telling.');
   renderChapterNav();
@@ -69,7 +73,9 @@ function renderChapterNav() {
 function updateMarkerLayers() {
   const plate = activePlate();
   for (const view of Object.values(pictures)) {
-    view.markers.innerHTML = renderMarkersFor(view, plate);
+    const markers = renderMarkersFor(view, plate);
+    view.markers.innerHTML = markers;
+    view.magnifierMarkers.innerHTML = markers;
   }
 }
 
@@ -79,9 +85,43 @@ function renderMarkersFor(view, plate) {
 
 function renderCursor() {
   for (const [side, view] of Object.entries(pictures)) {
-    const isVisible = side === focusedSide && state.phase === 'playing';
-    view.cursor.hidden = !isVisible;
+    const isVisible = side === focusedSide && state.phase === 'playing' && !magnifierOn;
+    view.cursor.toggleAttribute('hidden', !isVisible);
     view.cursor.innerHTML = isVisible ? renderKeyboardCursor(cursor) : '';
+  }
+}
+
+function renderMagnifier(view, side, plate) {
+  const clipId = `lens-${plate.id}-${side}`;
+  view.magnifier.innerHTML = `
+    <defs><clipPath id="${clipId}" clipPathUnits="userSpaceOnUse"><circle class="magnifier-clip" cx="360" cy="225" r="50"/></clipPath></defs>
+    <g clip-path="url(#${clipId})">
+      <svg class="magnifier-window" x="300" y="187.5" width="120" height="75" viewBox="330 206.25 60 37.5" preserveAspectRatio="none">
+        ${renderArtwork(plate, side === 'right', side)}
+        <g class="magnifier-markers"></g>
+      </svg>
+    </g>
+    <circle class="magnifier-border" cx="360" cy="225" r="50"/>
+  `;
+  view.magnifierClip = view.magnifier.querySelector('.magnifier-clip');
+  view.magnifierWindow = view.magnifier.querySelector('.magnifier-window');
+  view.magnifierBorder = view.magnifier.querySelector('.magnifier-border');
+  view.magnifierMarkers = view.magnifier.querySelector('.magnifier-markers');
+}
+
+function updateMagnifierPositions() {
+  const activeSide = focusedSide ?? lastFocusedSide;
+  for (const [side, view] of Object.entries(pictures)) {
+    const visible = magnifierOn && state.phase === 'playing' && side === activeSide;
+    view.magnifier.toggleAttribute('hidden', !visible);
+    if (!visible) continue;
+    view.magnifierClip.setAttribute('cx', String(cursor.x));
+    view.magnifierClip.setAttribute('cy', String(cursor.y));
+    view.magnifierWindow.setAttribute('x', String(cursor.x - 60));
+    view.magnifierWindow.setAttribute('y', String(cursor.y - 37.5));
+    view.magnifierWindow.setAttribute('viewBox', `${cursor.x - 30} ${cursor.y - 18.75} 60 37.5`);
+    view.magnifierBorder.setAttribute('cx', String(cursor.x));
+    view.magnifierBorder.setAttribute('cy', String(cursor.y));
   }
 }
 
@@ -91,17 +131,20 @@ function updateDisplay() {
   byId('remainingCount').textContent = String(remaining).padStart(2, '0');
   byId('remainingSuffix').textContent = remaining === 1 ? 'detail' : 'details';
   byId('foundCount').textContent = String(state.found.size).padStart(2, '0');
+  byId('foundSuffix').textContent = `of ${String(plate.differences.length).padStart(2, '0')}`;
   byId('timerReadout').textContent = formatTime(state.timeLeft);
   byId('timerReadout').dateTime = `PT${Math.floor(state.timeLeft / 60)}M${state.timeLeft % 60}S`;
   byId('timerFill').style.transform = `scaleX(${state.timeLeft / SECONDS_PER_PLATE})`;
   byId('timerTrack').classList.toggle('is-urgent', state.timeLeft <= 35);
   byId('timerTrack').setAttribute('aria-valuenow', String(state.timeLeft));
   byId('hintButton').disabled = state.hintUsed || state.phase !== 'playing';
+  byId('magnifierButton').disabled = state.phase !== 'playing';
   byId('pauseButton').disabled = ['transition', 'timed-out', 'finished'].includes(state.phase);
   byId('pauseLabel').textContent = state.phase === 'paused' ? 'Resume' : 'Pause';
   for (const view of Object.values(pictures)) view.button.disabled = state.phase !== 'playing';
   updateMarkerLayers();
   renderCursor();
+  updateMagnifierPositions();
   renderChapterNav();
 }
 
@@ -109,6 +152,16 @@ function hintDirection(item) {
   const vertical = item.y < 150 ? 'upper' : item.y > 300 ? 'lower' : 'middle';
   const horizontal = item.x < 240 ? 'left' : item.x > 480 ? 'right' : 'center';
   return `${vertical} ${horizontal}`;
+}
+
+function toggleMagnifier() {
+  if (state.phase !== 'playing') return;
+  magnifierOn = !magnifierOn;
+  byId('magnifierButton').setAttribute('aria-pressed', String(magnifierOn));
+  byId('magnifierLabel').textContent = magnifierOn ? 'Lens on' : 'Magnifier';
+  setFeedback(magnifierOn ? 'The lens follows your eye. The details are still yours to find.' : 'The full picture is back in view.');
+  announce(magnifierOn ? 'Magnifier on.' : 'Magnifier off.');
+  updateMagnifierPositions();
 }
 
 function askForHint() {
@@ -193,10 +246,12 @@ function handlePictureClick(side, event) {
   const x = Math.max(0, Math.min(720, ((event.clientX - bounds.left) / bounds.width) * 720));
   const y = Math.max(0, Math.min(450, ((event.clientY - bounds.top) / bounds.height) * 450));
   focusedSide = side;
+  lastFocusedSide = side;
   cursor.x = x;
   cursor.y = y;
   checkAt(x, y);
   renderCursor();
+  updateMagnifierPositions();
 }
 
 function resetCurrentPlate() {
@@ -215,10 +270,26 @@ function resetCurrentPlate() {
 }
 
 for (const [side, view] of Object.entries(pictures)) {
-  view.button.addEventListener('focus', () => { focusedSide = side; renderCursor(); });
+  view.button.addEventListener('focus', () => {
+    focusedSide = side;
+    lastFocusedSide = side;
+    renderCursor();
+    updateMagnifierPositions();
+  });
   view.button.addEventListener('blur', () => {
     if (focusedSide === side) focusedSide = null;
     renderCursor();
+    updateMagnifierPositions();
+  });
+  view.button.addEventListener('mousemove', (event) => {
+    if (!magnifierOn || state.phase !== 'playing') return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    cursor.x = Math.max(0, Math.min(720, ((event.clientX - bounds.left) / bounds.width) * 720));
+    cursor.y = Math.max(0, Math.min(450, ((event.clientY - bounds.top) / bounds.height) * 450));
+    focusedSide = side;
+    lastFocusedSide = side;
+    renderCursor();
+    updateMagnifierPositions();
   });
   view.button.addEventListener('keydown', (event) => {
     const moves = { ArrowLeft: [-18, 0], ArrowRight: [18, 0], ArrowUp: [0, -18], ArrowDown: [0, 18] };
@@ -228,6 +299,7 @@ for (const [side, view] of Object.entries(pictures)) {
     cursor.x = Math.max(18, Math.min(702, cursor.x + move[0]));
     cursor.y = Math.max(18, Math.min(432, cursor.y + move[1]));
     renderCursor();
+    updateMagnifierPositions();
   });
   view.button.addEventListener('click', (event) => handlePictureClick(side, event));
 }
@@ -240,11 +312,13 @@ document.querySelectorAll('[data-chapter]').forEach((button) => {
     cursor.x = 360;
     cursor.y = 225;
     focusedSide = null;
+    lastFocusedSide = null;
     renderScene();
   });
 });
 
 byId('hintButton').addEventListener('click', askForHint);
+byId('magnifierButton').addEventListener('click', toggleMagnifier);
 byId('restartButton').addEventListener('click', resetCurrentPlate);
 byId('pauseButton').addEventListener('click', () => {
   if (state.phase === 'playing') {
@@ -280,6 +354,12 @@ byId('helpDialog').addEventListener('close', () => {
 byId('playAgainButton').addEventListener('click', resetCurrentPlate);
 
 document.addEventListener('keydown', (event) => {
+  if (event.key.toLowerCase() === 'm' && !byId('helpDialog').open && !byId('finishDialog').open) {
+    if (event.target instanceof HTMLButtonElement && !['leftPicture', 'rightPicture', 'magnifierButton'].includes(event.target.id)) return;
+    event.preventDefault();
+    toggleMagnifier();
+    return;
+  }
   if (event.key.toLowerCase() === 'h' && !byId('helpDialog').open && !byId('finishDialog').open) {
     if (event.target instanceof HTMLButtonElement && !['hintButton', 'leftPicture', 'rightPicture'].includes(event.target.id)) return;
     event.preventDefault();

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#101b27">
-    <meta name="description" content="An original illustrated spot-the-difference hunt through four quiet corners of the Nightglass Conservatory.">
+    <meta name="description" content="An original illustrated spot-the-difference hunt through six quiet corners of the Nightglass Atlas.">
     <title>Aster's Quiet Hours — The Nightglass Atlas</title>
     <link rel="icon" href="data:,">
     <link rel="stylesheet" href="/styles/game.css">
@@ -16,14 +16,14 @@
           <span class="brand-seal" aria-hidden="true">✦</span>
           <span>THE NIGHTGLASS ATLAS</span>
         </a>
-        <div class="edition"><span class="edition-dot" aria-hidden="true"></span> FIELD JOURNAL <span class="edition-divider">/</span> NO. 04</div>
+        <div class="edition"><span class="edition-dot" aria-hidden="true"></span> FIELD JOURNAL <span class="edition-divider">/</span> NO. 06</div>
       </header>
 
       <section class="intro" aria-labelledby="game-title">
         <div>
-          <p class="eyebrow">A SLOW LITTLE HUNT <span aria-hidden="true">·</span> FOUR PLATES</p>
+          <p class="eyebrow">A SLOW LITTLE HUNT <span aria-hidden="true">·</span> SIX PLATES</p>
           <h1 id="game-title">Aster's <em>Quiet Hours</em></h1>
-          <p class="intro-copy">The observatory is settling for the night. Find what the starlight changed.</p>
+          <p class="intro-copy">Aster's atlas is open. Find what the starlight changed.</p>
         </div>
         <button class="field-note" id="helpButton" type="button" aria-haspopup="dialog">
           <span class="field-note-icon" aria-hidden="true">i</span>
@@ -47,6 +47,14 @@
         <button class="chapter-button" type="button" data-chapter="3">
           <span class="chapter-index">04</span><span class="chapter-name">Moonroof</span><span class="chapter-mark" aria-hidden="true">○</span>
         </button>
+        <span class="chapter-thread" aria-hidden="true"></span>
+        <button class="chapter-button" type="button" data-chapter="4">
+          <span class="chapter-index">05</span><span class="chapter-name">Tideglass quay</span><span class="chapter-mark" aria-hidden="true">○</span>
+        </button>
+        <span class="chapter-thread" aria-hidden="true"></span>
+        <button class="chapter-button" type="button" data-chapter="5">
+          <span class="chapter-index">06</span><span class="chapter-name">Cloud atlas</span><span class="chapter-mark" aria-hidden="true">○</span>
+        </button>
       </nav>
 
       <section class="game-card" aria-labelledby="plate-title">
@@ -59,7 +67,7 @@
           <div class="score-ribbon" aria-label="Current hunt progress">
             <div class="score-stat score-remaining"><span class="stat-label">STILL TO FIND</span><strong id="remainingCount">07</strong><span class="stat-suffix" id="remainingSuffix">details</span></div>
             <span class="score-rule" aria-hidden="true"></span>
-            <div class="score-stat"><span class="stat-label">FOUND</span><strong class="found-value" id="foundCount">00</strong><span class="stat-suffix">of 07</span></div>
+            <div class="score-stat"><span class="stat-label">FOUND</span><strong class="found-value" id="foundCount">00</strong><span class="stat-suffix" id="foundSuffix">of 07</span></div>
           </div>
         </header>
 
@@ -74,17 +82,19 @@
         <div class="picture-pair" id="picturePair">
           <figure class="picture-frame">
             <figcaption class="picture-caption"><span class="caption-number">A</span><span>FIRST OBSERVATION</span><span class="caption-side">LEFT</span></figcaption>
-            <button class="picture-hitbox" id="leftPicture" type="button" aria-label="Left picture: the conservatory after dusk. Seven details differ between the pictures. Focus here, use arrow keys to move, then press Enter or Space to check a spot.">
+            <button class="picture-hitbox" id="leftPicture" type="button" aria-label="Left picture: the conservatory after dusk. Several details differ between the pictures. Focus here, use arrow keys to move, then press Enter or Space to check a spot.">
               <svg class="art-svg" id="leftArt" viewBox="0 0 720 450" aria-hidden="true"></svg>
               <svg class="marker-layer" id="leftMarkers" viewBox="0 0 720 450" aria-hidden="true"></svg>
+              <svg class="magnifier-layer" id="leftMagnifier" viewBox="0 0 720 450" aria-hidden="true" hidden></svg>
               <svg class="cursor-layer" id="leftCursor" viewBox="0 0 720 450" aria-hidden="true" hidden></svg>
             </button>
           </figure>
           <figure class="picture-frame">
             <figcaption class="picture-caption"><span class="caption-number">B</span><span>SECOND OBSERVATION</span><span class="caption-side">RIGHT</span></figcaption>
-            <button class="picture-hitbox" id="rightPicture" type="button" aria-label="Right picture: the conservatory after dusk. Seven details differ between the pictures. Focus here, use arrow keys to move, then press Enter or Space to check a spot.">
+            <button class="picture-hitbox" id="rightPicture" type="button" aria-label="Right picture: the conservatory after dusk. Several details differ between the pictures. Focus here, use arrow keys to move, then press Enter or Space to check a spot.">
               <svg class="art-svg" id="rightArt" viewBox="0 0 720 450" aria-hidden="true"></svg>
               <svg class="marker-layer" id="rightMarkers" viewBox="0 0 720 450" aria-hidden="true"></svg>
+              <svg class="magnifier-layer" id="rightMagnifier" viewBox="0 0 720 450" aria-hidden="true" hidden></svg>
               <svg class="cursor-layer" id="rightCursor" viewBox="0 0 720 450" aria-hidden="true" hidden></svg>
             </button>
           </figure>
@@ -95,6 +105,9 @@
           <div class="control-row">
             <button class="control-button hint-button" id="hintButton" type="button" aria-label="Ask for a hint. One hint for this field note.">
               <span class="button-icon hint-icon" aria-hidden="true">✧</span><span>Ask for a hint</span><kbd>H</kbd>
+            </button>
+            <button class="control-button" id="magnifierButton" type="button" aria-pressed="false" aria-labelledby="magnifierLabel" aria-keyshortcuts="M">
+              <span class="button-icon" aria-hidden="true">⌕</span><span id="magnifierLabel">Magnifier</span><kbd>M</kbd>
             </button>
             <button class="control-button" id="pauseButton" type="button"><span class="button-icon" aria-hidden="true">Ⅱ</span><span id="pauseLabel">Pause</span></button>
             <button class="control-button" id="soundButton" type="button" aria-pressed="false" aria-label="Turn sound on"><span class="button-icon" aria-hidden="true">♫</span><span id="soundLabel">Sound off</span></button>
@@ -115,18 +128,19 @@
       <h2 id="helpTitle">How to read the plates</h2>
       <p>Look between the two pictures and click a changed detail on either side. A small brass mark appears on both plates when you find one.</p>
       <ul>
-        <li>Find all seven details before the three-minute sand runs out.</li>
+        <li>Find every changed detail before the three-minute sand runs out.</li>
+        <li>Turn on the magnifier for a closer look, or press M while a picture is focused.</li>
         <li>Ask for one gentle hint on each plate. It points nearby without giving the answer away.</li>
         <li>Focus a picture and use the arrow keys to move your finder; press Enter or Space to check.</li>
         <li>Pause the clock whenever you need a moment.</li>
       </ul>
-      <form method="dialog"><button class="dialog-done">Back to the garden</button></form>
+      <form method="dialog"><button class="dialog-done">Back to the atlas</button></form>
     </dialog>
 
     <dialog class="journal-dialog finish-dialog" id="finishDialog" aria-labelledby="finishTitle">
       <p class="eyebrow">THE ATLAS IS COMPLETE</p>
       <h2 id="finishTitle">A quiet night, well observed.</h2>
-      <p id="finishSummary">You found every little change across the four plates.</p>
+      <p id="finishSummary">You found every little change across the six plates.</p>
       <div class="finish-score"><span>FIELD NOTES COMPLETE</span><strong id="finalScore">0000</strong></div>
       <form method="dialog"><button class="dialog-done" id="playAgainButton">Read the atlas again</button></form>
     </dialog>
