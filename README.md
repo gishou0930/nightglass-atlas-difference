@@ -4,7 +4,7 @@
 [![rank](https://make.fun/badge/best-spot-the-difference-game-20261121-0451/gishou0930/nightglass-atlas-difference/rank.svg)](https://make.fun/bounty/best-spot-the-difference-game-20261121-0451/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=best-spot-the-difference-game-20261121-0451)
 [![reward](https://make.fun/badge/best-spot-the-difference-game-20261121-0451/gishou0930/nightglass-atlas-difference/reward.svg)](https://make.fun/bounty/best-spot-the-difference-game-20261121-0451?utm_source=github&utm_medium=readme&utm_campaign=best-spot-the-difference-game-20261121-0451)
 
-An original illustrated spot-the-difference game across seven quiet corners of the Nightglass Atlas, with 61 fair differences to find and a keyboard-friendly magnifier.
+An original illustrated spot-the-difference game across seven quiet corners of the Nightglass Atlas, with 61 fair differences, live total scoring, a keyboard-friendly magnifier, and offline play.
 
 ## Run it
 

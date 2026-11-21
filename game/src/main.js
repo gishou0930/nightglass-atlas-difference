@@ -132,6 +132,8 @@ function updateDisplay() {
   byId('remainingSuffix').textContent = remaining === 1 ? 'detail' : 'details';
   byId('foundCount').textContent = String(state.found.size).padStart(2, '0');
   byId('foundSuffix').textContent = `of ${String(plate.differences.length).padStart(2, '0')}`;
+  const currentScore = totalScore(state) + (!state.completed[state.chapter] && state.phase !== 'timed-out' ? state.points : 0);
+  byId('totalScoreCount').textContent = String(currentScore).padStart(4, '0');
   byId('timerReadout').textContent = formatTime(state.timeLeft);
   byId('timerReadout').dateTime = `PT${Math.floor(state.timeLeft / 60)}M${state.timeLeft % 60}S`;
   byId('timerFill').style.transform = `scaleX(${state.timeLeft / SECONDS_PER_PLATE})`;
