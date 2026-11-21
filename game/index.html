@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#101b27">
+    <meta name="description" content="A hand-painted spot-the-difference hunt through three quiet corners of the Nightglass Conservatory.">
+    <title>Aster's Quiet Hours — The Nightglass Atlas</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="/styles/game.css">
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="The Nightglass Atlas home">
+          <span class="brand-seal" aria-hidden="true">✦</span>
+          <span>THE NIGHTGLASS ATLAS</span>
+        </a>
+        <div class="edition"><span class="edition-dot" aria-hidden="true"></span> FIELD JOURNAL <span class="edition-divider">/</span> NO. 03</div>
+      </header>
+
+      <section class="intro" aria-labelledby="game-title">
+        <div>
+          <p class="eyebrow">A SLOW LITTLE HUNT <span aria-hidden="true">·</span> THREE PLATES</p>
+          <h1 id="game-title">Aster's <em>Quiet Hours</em></h1>
+          <p class="intro-copy">The observatory is settling for the night. Find what the starlight changed.</p>
+        </div>
+        <button class="field-note" id="helpButton" type="button" aria-haspopup="dialog">
+          <span class="field-note-icon" aria-hidden="true">i</span>
+          <span>How to play</span>
+        </button>
+      </section>
+
+      <nav class="chapter-nav" id="chapterNav" aria-label="Field notes">
+        <button class="chapter-button is-current" type="button" data-chapter="0">
+          <span class="chapter-index">01</span><span class="chapter-name">Glasshouse</span><span class="chapter-mark" aria-hidden="true">○</span>
+        </button>
+        <span class="chapter-thread" aria-hidden="true"></span>
+        <button class="chapter-button" type="button" data-chapter="1">
+          <span class="chapter-index">02</span><span class="chapter-name">Orbit orchard</span><span class="chapter-mark" aria-hidden="true">○</span>
+        </button>
+        <span class="chapter-thread" aria-hidden="true"></span>
+        <button class="chapter-button" type="button" data-chapter="2">
+          <span class="chapter-index">03</span><span class="chapter-name">Bell archive</span><span class="chapter-mark" aria-hidden="true">○</span>
+        </button>
+      </nav>
+
+      <section class="game-card" aria-labelledby="plate-title">
+        <header class="plate-header">
+          <div class="plate-copy">
+            <p class="plate-kicker" id="plateKicker">FIELD NOTE 01 <span aria-hidden="true">/</span> GLASSHOUSE</p>
+            <h2 id="plateTitle">The conservatory after dusk</h2>
+            <p class="plate-story" id="plateStory">Aster has counted the stars twice. Something in the glass is still out of place.</p>
+          </div>
+          <div class="score-ribbon" aria-label="Current hunt progress">
+            <div class="score-stat score-remaining"><span class="stat-label">STILL TO FIND</span><strong id="remainingCount">07</strong><span class="stat-suffix" id="remainingSuffix">details</span></div>
+            <span class="score-rule" aria-hidden="true"></span>
+            <div class="score-stat"><span class="stat-label">FOUND</span><strong class="found-value" id="foundCount">00</strong><span class="stat-suffix">of 07</span></div>
+          </div>
+        </header>
+
+        <div class="timer-row">
+          <div class="timer-label"><span class="timer-glyph" aria-hidden="true">◷</span><span>THE NIGHT IS MOVING</span></div>
+          <div class="timer-track" id="timerTrack" role="progressbar" aria-label="Time remaining in this plate" aria-valuemin="0" aria-valuemax="180" aria-valuenow="180">
+            <span class="timer-fill" id="timerFill"></span>
+          </div>
+          <time class="timer-readout" id="timerReadout" datetime="PT3M">03:00</time>
+        </div>
+
+        <div class="picture-pair" id="picturePair">
+          <figure class="picture-frame">
+            <figcaption class="picture-caption"><span class="caption-number">A</span><span>FIRST OBSERVATION</span><span class="caption-side">LEFT</span></figcaption>
+            <button class="picture-hitbox" id="leftPicture" type="button" aria-label="Left picture: the conservatory after dusk. Seven details differ between the pictures. Focus here, use arrow keys to move, then press Enter or Space to check a spot.">
+              <svg class="art-svg" id="leftArt" viewBox="0 0 720 450" aria-hidden="true"></svg>
+              <svg class="marker-layer" id="leftMarkers" viewBox="0 0 720 450" aria-hidden="true"></svg>
+              <svg class="cursor-layer" id="leftCursor" viewBox="0 0 720 450" aria-hidden="true" hidden></svg>
+            </button>
+          </figure>
+          <figure class="picture-frame">
+            <figcaption class="picture-caption"><span class="caption-number">B</span><span>SECOND OBSERVATION</span><span class="caption-side">RIGHT</span></figcaption>
+            <button class="picture-hitbox" id="rightPicture" type="button" aria-label="Right picture: the conservatory after dusk. Seven details differ between the pictures. Focus here, use arrow keys to move, then press Enter or Space to check a spot.">
+              <svg class="art-svg" id="rightArt" viewBox="0 0 720 450" aria-hidden="true"></svg>
+              <svg class="marker-layer" id="rightMarkers" viewBox="0 0 720 450" aria-hidden="true"></svg>
+              <svg class="cursor-layer" id="rightCursor" viewBox="0 0 720 450" aria-hidden="true" hidden></svg>
+            </button>
+          </figure>
+        </div>
+
+        <div class="game-footer">
+          <p class="feedback" id="feedback" aria-hidden="true"><span class="feedback-spark" aria-hidden="true">✦</span><span id="feedbackText">Take your time. The little things are telling.</span></p>
+          <div class="control-row">
+            <button class="control-button hint-button" id="hintButton" type="button" aria-label="Ask for a hint. One hint for this field note.">
+              <span class="button-icon hint-icon" aria-hidden="true">✧</span><span>Ask for a hint</span><kbd>H</kbd>
+            </button>
+            <button class="control-button" id="pauseButton" type="button"><span class="button-icon" aria-hidden="true">Ⅱ</span><span id="pauseLabel">Pause</span></button>
+            <button class="control-button" id="soundButton" type="button" aria-pressed="false" aria-label="Turn sound on"><span class="button-icon" aria-hidden="true">♫</span><span id="soundLabel">Sound off</span></button>
+            <button class="control-button restart-button" id="restartButton" type="button"><span class="button-icon" aria-hidden="true">↺</span><span>Start over</span></button>
+          </div>
+        </div>
+      </section>
+
+      <footer class="page-footer">
+        <span><span class="footer-star" aria-hidden="true">✦</span> Look slowly; the small things have stories.</span>
+        <span class="keyboard-tip">CLICK A DETAIL <i aria-hidden="true">·</i> OR FOCUS A PICTURE AND USE THE ARROW KEYS</span>
+      </footer>
+    </main>
+
+    <dialog class="journal-dialog" id="helpDialog" aria-labelledby="helpTitle">
+      <form method="dialog"><button class="dialog-close" aria-label="Close instructions">×</button></form>
+      <p class="eyebrow">A NOTE FROM ASTER</p>
+      <h2 id="helpTitle">How to read the plates</h2>
+      <p>Look between the two pictures and click a changed detail on either side. A small brass mark appears on both plates when you find one.</p>
+      <ul>
+        <li>Find all seven details before the three-minute sand runs out.</li>
+        <li>Ask for one gentle hint on each plate. It points nearby without giving the answer away.</li>
+        <li>Focus a picture and use the arrow keys to move your finder; press Enter or Space to check.</li>
+        <li>Pause the clock whenever you need a moment.</li>
+      </ul>
+      <form method="dialog"><button class="dialog-done">Back to the garden</button></form>
+    </dialog>
+
+    <dialog class="journal-dialog finish-dialog" id="finishDialog" aria-labelledby="finishTitle">
+      <p class="eyebrow">THE ATLAS IS COMPLETE</p>
+      <h2 id="finishTitle">A quiet night, well observed.</h2>
+      <p id="finishSummary">You found every little change across the three plates.</p>
+      <div class="finish-score"><span>FIELD NOTES COMPLETE</span><strong id="finalScore">0000</strong></div>
+      <form method="dialog"><button class="dialog-done" id="playAgainButton">Read the atlas again</button></form>
+    </dialog>
+
+    <p class="sr-only" id="liveRegion" aria-live="polite" aria-atomic="true"></p>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
